@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tasty Bites – Chakradharpur</title>
+<style>
+:root{--bg:#fff7ee;--card:#fff;--txt:#2a1a10;--sub:#7a6657;--line:#ecdcc8;--accent:#e8590c;--wa:#128c7e;--hero:#1e1511;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--bg:#140f0b;--card:#211812;--txt:#f6ece1;--sub:#b3a291;--line:#36291f;--accent:#fb923c;--wa:#25a99a;--hero:#0c0805;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;max-width:560px;margin:0 auto;padding-bottom:90px}
+.hero{background:var(--hero);color:#fff;padding:26px 18px 20px;text-align:center}
+.hero h1{margin:4px 0;font-size:32px;color:#fb923c}
+.hero p{margin:3px 0;opacity:.9;font-size:14px}
+.badges{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.badges span{background:#fff2;border-radius:20px;padding:4px 12px;font-size:12px}
+.call{display:inline-block;margin-top:12px;color:#fff;background:#fff2;padding:8px 16px;border-radius:20px;text-decoration:none;font-size:14px}
+h2{margin:20px 16px 8px;font-size:18px;color:var(--accent)}
+.item{margin:0 16px 10px;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.item b{font-size:15px}
+.r{display:flex;align-items:center;justify-content:space-between;margin-top:8px;font-size:14px}
+.r .p{color:var(--accent);font-weight:700}
+.q{display:flex;align-items:center;gap:8px}
+.q button{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--accent);background:none;color:var(--accent);font-size:19px;line-height:1}
+.q span{min-width:16px;text-align:center}
+#bar{position:fixed;left:0;right:0;bottom:0;max-width:560px;margin:0 auto;padding:10px 14px;background:var(--card);border-top:1px solid var(--line);display:none}
+#bar button{width:100%;padding:13px;border:0;border-radius:26px;background:var(--accent);color:#fff;font-size:15px;font-weight:700}
+#sheet{position:fixed;inset:0;background:#0008;display:none;align-items:flex-end;justify-content:center}
+#sheet .in{background:var(--card);width:100%;max-width:560px;border-radius:20px 20px 0 0;padding:18px 16px;max-height:92%;overflow-y:auto}
+#sheet h3{margin:0 0 10px}
+.ln{display:flex;justify-content:space-between;font-size:14px;padding:3px 0}
+.tot{border-top:1px solid var(--line);margin-top:8px;padding-top:8px;font-weight:700}
+input[type=text],textarea{width:100%;margin-top:10px;padding:11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--txt);font:inherit}
+.pm{display:flex;gap:18px;margin:10px 0 0;font-size:14px;flex-wrap:wrap}
+.pm input{accent-color:var(--accent)}
+.lb{font-size:13px;color:var(--sub);margin-top:14px}
+.note{font-size:12px;color:var(--sub);margin-top:6px}
+#upi a.b{display:block;text-align:center;text-decoration:none;background:var(--accent);color:#fff;padding:12px;border-radius:26px;font-weight:700;margin-top:12px}
+#upi .id{display:flex;justify-content:center;align-items:center;gap:8px;font-size:13px;color:var(--sub);margin-top:6px}
+#upi .id button{border:1px solid var(--accent);background:none;color:var(--accent);border-radius:12px;padding:3px 10px;font-size:12px}
+#wa{display:block;text-align:center;text-decoration:none;background:var(--wa);color:#fff;padding:13px;border-radius:26px;font-weight:700;font-size:15px;margin-top:14px}
+#err{color:#dc2626;font-size:13px;margin:10px 0 0;display:none}
+.x{float:right;background:none;border:0;font-size:22px;color:var(--sub)}
+footer{text-align:center;color:var(--sub);font-size:12px;margin:24px 16px}
+</style>
+</head>
+<body>
+<div class="hero">
+<div style="font-size:40px">🍽️</div>
+<h1>Tasty Bites</h1>
+<p>Indian • Chinese • BBQ · Veg &amp; Non-Veg</p>
+<p>📍 Near Honda Showroom, Asantaliya, Chakradharpur</p>
+<p>Owner: Saroj Mahto</p>
+<div class="badges"><span>🛵 Delivery</span><span>🏪 Pickup</span><span>📱 UPI</span><span>💵 COD</span></div>
+<a class="call" href="tel:+919234442980">📞 9234442980</a>
+</div>
+<div id="menu"></div>
+<footer>Tasty Bites · Good Food, Great Mood</footer>
+<div id="bar"><button id="cartbtn"></button></div>
+<div id="sheet"><div class="in">
+<button class="x" id="close" aria-label="Band karo">×</button>
+<h3>Aapka order</h3>
+<div id="lines"></div>
+<input type="text" id="nm" placeholder="Aapka naam">
+<div class="lb">Kaise chahiye?</div>
+<div class="pm"><label><input type="radio" name="md" value="Delivery" checked> 🛵 Delivery (₹20)</label><label><input type="radio" name="md" value="Pickup"> 🏪 Pickup (free)</label></div>
+<div id="dl">
+<textarea id="ad" rows="2" placeholder="Delivery address (landmark ke saath)"></textarea>
+<div class="note">Delivery 1-3 km tak ₹20. Isse door ho to hum WhatsApp pe bata denge.</div>
+</div>
+<div class="lb">Payment</div>
+<div class="pm"><label><input type="radio" name="pm" value="UPI" checked> UPI</label><label><input type="radio" name="pm" value="COD"> COD (cash)</label></div>
+<div id="upi"></div>
+<p id="err">Naam bharo (delivery ke liye address bhi).</p>
+<a id="wa" href="#" target="_blank" rel="noopener">WhatsApp pe order bhejo</a>
+</div></div>
+<script>
+var PHONE="919234442980";
+var NAME="Tasty Bites";
+var UPI="paytm.s2csvhf@pty";
+var DEL=20;
+var H=[["Half",0],["Full",0]];
+function hf(a,b){return [["Half",a],["Full",b]]}
+function one(a){return [["",a]]}
+var cats=[
+["🍛 Biryani",[[1,"Biryani",hf(80,140)]]],
+["🌶️ Chilly",[[2,"Chicken Chilly Dry",hf(70,130)],[3,"Chicken Chilly Gravy",hf(80,150)],[4,"Chicken Lollipop",hf(80,150)],[5,"Chicken 65",hf(80,150)]]],
+["🍜 Noodles",[[6,"Veg Hakka Noodles",hf(40,80)],[7,"Chicken Hakka Noodles",hf(60,120)],[8,"Egg Noodles",hf(50,100)],[9,"Non Veg Mix Noodles",hf(70,140)]]],
+["🥡 Manchurian",[[10,"Manchurian Bhel",one(30)],[11,"Veg Manchurian Dry",hf(40,80)],[12,"Veg Manchurian Gravy",hf(50,100)]]],
+["🍚 Rice",[[13,"Veg Fried Rice",hf(60,120)],[14,"Egg Fried Rice",hf(70,140)],[15,"Chicken Fried Rice",hf(80,160)],[16,"Non Veg Mix Fried Rice",hf(90,180)],[17,"Schezwan Fried Rice",hf(90,180)]]],
+["🌯 Rolls",[[18,"Veg Roll",one(30)],[19,"Paneer Roll",one(60)],[20,"Egg Roll",one(40)],[21,"Double Egg Roll",one(50)],[22,"Chicken Roll",one(60)],[23,"Double Egg Chicken Roll",one(70)]]],
+["🍲 Soup",[[24,"Veg Soup",one(40)],[25,"Chicken Soup",one(60)]]],
+["🍗 Leg Piece &amp; Pakoda",[[26,"Chicken Leg Piece",one(80)],[27,"Chicken Pakoda",hf(60,120)]]],
+["🥔 Spring Potato",[[28,"Salted Spring Potato",one(30)],[29,"Peri Peri Spring Potato",one(40)]]]
+];
+var qty={},all={};
+var menu=document.getElementById("menu");
+cats.forEach(function(c){
+var h=document.createElement("h2");h.innerHTML=c[0];menu.appendChild(h);
+c[1].forEach(function(i){
+var d=document.createElement("div");d.className="item";
+var s='<b>'+i[1]+'</b>';
+i[2].forEach(function(z,zi){
+var k=i[0]+"_"+zi;
+all[k]={n:i[1]+(z[0]?" ("+z[0]+")":""),p:z[1]};
+s+='<div class="r"><span>'+(z[0]?z[0]+" · ":"")+'<span class="p">₹'+z[1]+'</span></span><div class="q"><button data-k="'+k+'" data-d="-1" aria-label="Kam karo">−</button><span id="q'+k+'">0</span><button data-k="'+k+'" data-d="1" aria-label="Badhao">+</button></div></div>'});
+d.innerHTML=s;
+d.querySelectorAll("button").forEach(function(b){b.onclick=function(){chg(b.dataset.k,Number(b.dataset.d))}});
+menu.appendChild(d)})});
+function chg(k,d){qty[k]=Math.max(0,(qty[k]||0)+d);document.getElementById("q"+k).textContent=qty[k];upd()}
+function sum(){var n=0,t=0,l=[];for(var k in qty){if(qty[k]){n+=qty[k];t+=qty[k]*all[k].p;l.push([qty[k],all[k].n,qty[k]*all[k].p])}}return{n:n,t:t,l:l}}
+function upd(){var s=sum();document.getElementById("bar").style.display=s.n?"block":"none";
+document.getElementById("cartbtn").textContent="Order dekhein · "+s.n+" item · ₹"+s.t}
+function val(n){return document.querySelector("input[name="+n+"]:checked").value}
+function cp(b){try{navigator.clipboard.writeText(UPI);b.textContent="Copy ho gaya"}catch(e){b.textContent="Upar dekho"}}
+function render(){
+var s=sum(),del=val("md")=="Delivery",f=del?DEL:0,t=s.t+f,pay=val("pm");
+document.getElementById("dl").style.display=del?"block":"none";
+var h=s.l.map(function(x){return '<div class="ln"><span>'+x[0]+' × '+x[1]+'</span><span>₹'+x[2]+'</span></div>'}).join("");
+h+='<div class="ln"><span>Subtotal</span><span>₹'+s.t+'</span></div>';
+h+='<div class="ln"><span>'+(del?'Delivery charge':'Pickup')+'</span><span>'+(del?'₹'+f:'Free')+'</span></div>';
+h+='<div class="ln tot"><span>Total</span><span>₹'+t+'</span></div>';
+document.getElementById("lines").innerHTML=h;
+document.getElementById("upi").innerHTML=pay=="UPI"?'<a class="b" href="upi://pay?pa='+UPI+'&amp;pn='+encodeURIComponent(NAME)+'&amp;am='+t+'&amp;cu=INR">UPI se pay karo ₹'+t+'</a><div class="id"><span>UPI ID: '+UPI+'</span><button onclick="cp(this)">Copy</button></div>':'';
+var txt="Namaste "+NAME+"!\nNaam: "+document.getElementById("nm").value+"\nOrder:\n"+s.l.map(function(x){return x[0]+" x "+x[1]+" = ₹"+x[2]}).join("\n")+"\nSubtotal: ₹"+s.t;
+if(del){txt+="\nDelivery: ₹"+f+"\nAddress: "+document.getElementById("ad").value}
+else{txt+="\nPickup: khud lene aaunga"}
+txt+="\nTotal: ₹"+t+"\nPayment: "+pay+(pay=="UPI"?" (screenshot bhejunga)":" (cash)");
+document.getElementById("wa").href="https://wa.me/"+PHONE+"?text="+encodeURIComponent(txt)}
+document.getElementById("cartbtn").onclick=function(){render();document.getElementById("sheet").style.display="flex"};
+document.getElementById("close").onclick=function(){document.getElementById("sheet").style.display="none"};
+["nm","ad"].forEach(function(id){document.getElementById(id).oninput=render});
+document.querySelectorAll("input[type=radio]").forEach(function(r){r.onchange=render});
+document.getElementById("wa").onclick=function(e){
+var del=val("md")=="Delivery";
+var ok=document.getElementById("nm").value.trim()&&(!del||document.getElementById("ad").value.trim());
+document.getElementById("err").style.display=ok?"none":"block";
+if(!ok){e.preventDefault()}};
+</script>
+</body>
+  </html>
